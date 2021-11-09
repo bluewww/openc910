@@ -27,8 +27,14 @@ $ make help
 # You should use vcs for a seamless experience
 # this runs hell world
 $ vcs-2020.03 make runcase CASE=hello_world SIM=vcs
-```
 
+```
+If you want to dump a VCD and analyze the waveforms with
+QuestaSim, use this command instead:
+
+```
+$ vcs-2020.03 make runcase CASE=hello_world SIM=vcs DUMP=on WAVES=on
+```
 
 (Optional) You can get the source code for the toolchain here:
 

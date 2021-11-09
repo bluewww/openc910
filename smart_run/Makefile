@@ -21,6 +21,9 @@ include ./setup/env_check.mk
 ################################################################################
 SIM = iverilog
 DUMP = off
+WAVES = off
+
+QUESTA_ENV=questa-2021.1
 
 # Generate C++ in executable form
 VERILATOR_FLAGS += -cc --exe
@@ -189,6 +192,10 @@ else
             endif
         endif
 endif
+ifeq ($(WAVES),on)
+	cd work && $(QUESTA_ENV) vcd2wlf test.vcd test.wlf
+	cd work && $(QUESTA_ENV) vsim -view test.wlf
+endif
 else
 	$(error Argument CASE=xxx is not valid: \
         $(newline)   The list of valid cases can be obtained by executing: \
@@ -238,6 +245,7 @@ help:
 	@echo "    SIM=                            : options: vcs / nc"; 
 	@echo "    CASE=                           : options: the list print by 'make showcase'"; 
 	@echo "    DUMP=                           : options: on / off";
+	@echo "    WAVES=                          : options: on / off";
 	@echo "  Examples:";
 	@echo "    make runcase CASE=dhry          : run case 'dhry' (by iverilog withtout dump) "; 
 	@echo "    make runcase CASE=dhry SIM=nc   : run case 'dhry' (by nc withtout dump) "; 

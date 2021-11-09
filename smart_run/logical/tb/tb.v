@@ -52,6 +52,10 @@ limitations under the License.
 // `define APB_BASE_ADDR       40'h4000000000
 `define APB_BASE_ADDR       40'hb0000000
 
+// Dump starting from this hierarchy level. If the VCD is too big,
+// reduce the numbers of dumped elements
+`define DUMP_TOP_HIERARCHY tb.x_soc
+
 module tb();
   reg clk;
   reg jclk;
@@ -317,17 +321,9 @@ module tb();
   `ifndef NO_DUMP
   initial
   begin
-  `ifdef NC_SIM
+    $display("######time:%d, Dump start######",$time);
     $dumpfile("test.vcd");
-    $dumpvars;  
-  `else
-    `ifdef IVERILOG_SIM
-      $dumpfile("test.vcd");
-      $dumpvars;  
-    `else
-      $fsdbDumpvars();
-    `endif
-  `endif
+    $dumpvars(0, `DUMP_TOP_HIERARCHY);
   end
   `endif
   
